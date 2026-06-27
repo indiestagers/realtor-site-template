@@ -1,0 +1,84 @@
+{
+  "slug": "horner-realty-kc",
+  "site_name": "Horner Realty KC",
+  "legal_name": "Horner Realty KC LLC",
+  "tagline": "Kansas City's Boutique Real Estate Brokerage",
+  "meta_description": "Horner Realty KC LLC — a family-run boutique brokerage helping buyers and sellers across the Greater Kansas City area.",
+  "region_short": "Kansas City",
+  "office_line": "Horner Realty KC LLC · Mission, KS 66205",
+  "office_location": "Mission, Kansas",
+  "office_phone": "(913) 356-1270",
+  "office_phone_tel": "+19133561270",
+  "primary_phone": "(913) 238-6184",
+  "primary_phone_tel": "+19132386184",
+  "primary_email": "hello@example-realty.com",
+  "year": 2026,
+  "admin_passcode": "horner2026",
+
+  "brand": {
+    "ink": "#0f1611",
+    "cream": "#faf6ee",
+    "brand": "#2e7a3f",
+    "brand_light": "#84cf63",
+    "brand_dark": "#1f6030",
+    "gold": "#c9b078",
+    "navy": "#180c44"
+  },
+
+  "hero": {
+    "eyebrow": "A boutique brokerage · Greater Kansas City",
+    "h1": "Where Kansas City <em>comes home.</em>",
+    "sub": "Family-run, fiercely local, and built on one simple philosophy — clients come first.",
+    "stats": [
+      { "value": "26", "plus": true, "label": "Years of experience" },
+      { "value": "3", "label": "Agents, one family" },
+      { "value": "2", "label": "States — KS & MO" },
+      { "value": "1", "label": "Promise: clients first" }
+    ]
+  },
+
+  "about_h2": "Big-firm knowledge. <em>Family-table</em> service.",
+  "about_p1": "We're a small team by design. When you work with us, you're never handed off to an assistant — you get constant communication, honest advice, and people who treat your move like their own.",
+  "about_p2": "Buying or selling a home is more than a transaction — it's a life-changing moment, and our only measure of success is that you walk away from it with an amazing experience.",
+  "team_first_names": "Alicia, Brian &amp; Tyler",
+  "services_h2": "Two sides of the table. <em>One standard.</em>",
+  "sold_h2": "Proof, not promises — <em>our sold homes</em>",
+  "team_eyebrow": "The people",
+  "team_h2": "Three agents. <em>One family.</em>",
+  "quote": "\"If you're not left with an <span>amazing experience</span>, we haven't done our job.\"",
+  "community_h2": "Know the metro like <em>a local</em>",
+  "footer_cta_h2": "Let's find your <em>way home.</em>",
+  "values": [
+    { "title": "Professionalism", "body": "Ongoing training and the most up-to-date tools, so the advice you get is never yesterday's." },
+    { "title": "Integrity", "body": "Honest, ethical, confidential service — the kind that earns respect one client at a time." },
+    { "title": "Knowledge", "body": "Deep, lived-in understanding of the metro on both sides of the state line." }
+  ],
+  "sold_blurb": "A look at homes we've recently guided to the closing table, across the metro.",
+  "footer_about": "A family-run boutique brokerage providing real estate services across the Greater Kansas City area.",
+
+  "areas": ["Overland Park", "Olathe", "Lee's Summit", "Mission", "Prairie Village", "Lenexa", "Shawnee", "Kansas City"],
+
+  "team": [
+    { "name": "Alicia Horner", "role": "Broker / Owner", "bio": "A local who has guided buyers and sellers for over two decades.", "phone": "(913) 238-6184", "phone_tel": "+19132386184", "email": "hello@example-realty.com" },
+    { "name": "Brian Horner", "role": "Sales Manager", "bio": "Living in the Northland with his family, Brian brings years of metro market expertise.", "phone": "(816) 288-4155", "phone_tel": "+18162884155", "email": "hello@example-realty.com" },
+    { "name": "Tyler Logan", "role": "Agent", "bio": "Brings fresh energy and a sharp eye to every showing, with a clients-first standard.", "phone": "(913) 325-9009", "phone_tel": "+19133259009", "email": "hello@example-realty.com" }
+  ],
+
+  "socials": [
+    { "label": "Facebook", "url": "https://www.facebook.com/" },
+    { "label": "Realtor.com", "url": "https://www.realtor.com/" }
+  ],
+
+  "community": [
+    { "img": "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=900&q=80", "side": "Kansas side", "name": "Johnson County", "alt": "Tree-lined suburban street" },
+    { "img": "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=900&q=80", "side": "Missouri side", "name": "The Northland", "alt": "Modern family home" },
+    { "img": "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=900&q=80", "side": "Missouri side", "name": "Lee's Summit", "alt": "Backyard pool at dusk" },
+    { "img": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=80", "side": "Kansas side", "name": "Olathe", "alt": "Bright living interior" }
+  ],
+
+  "listings": [
+    { "id": "active-1", "status": "for-sale", "address": "4812 W 71st Terrace", "city": "Prairie Village", "state": "KS", "zip": "66208", "price": 489000, "beds": 4, "baths": 3, "sqft": 2540, "image": "https://images.unsplash.com/photo-1605146769289-440113cc3d00?auto=format&fit=crop&w=1200&q=80", "description": "Sun-filled two-story with a renovated kitchen and finished lower level.", "featured": true },
+    { "id": "active-2", "status": "pending", "address": "10406 Hayes Street", "city": "Overland Park", "state": "KS", "zip": "66212", "price": 365000, "beds": 3, "baths": 2, "sqft": 1860, "image": "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1200&q=80", "description": "Charming updated split-level near parks and shops.", "featured": true },
+    { "id": "sold-1", "status": "sold", "address": "17065 W 162nd Street", "city": "Olathe", "state": "KS", "zip": "66062", "price": null, "beds": 5, "baths": 4, "sqft": 3498, "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80", "description": "Open chef's kitchen, two fireplaces, over 3,400 sq ft.", "featured": false }
+  ]
+}
