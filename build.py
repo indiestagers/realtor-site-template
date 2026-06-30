@@ -60,10 +60,14 @@ def phone_placeholder(phone):
 def gen_team(team):
     out = []
     for m in team:
+        img = m.get("image")
+        avatar = (f'<img class="team-card__avatar team-card__avatar--photo" src="{img}" alt="{m.get("name","")}">'
+                  if img else
+                  f'<span class="team-card__avatar" aria-hidden="true">{(m.get("name") or "?")[0]}</span>')
         out.append(f'''
           <article class="team-card">
             <div class="team-card__top">
-              <span class="team-card__avatar" aria-hidden="true">{(m.get("name") or "?")[0]}</span>
+              {avatar}
               <div>
                 <h3>{m.get("name","")}</h3>
                 <p class="role">{m.get("role","Agent")}</p>
@@ -171,10 +175,36 @@ def gen_community(tiles):
     return "".join(out)
 
 
+def gen_brand_mark(logo, navy, brand, site_name):
+    """Header/footer brand: the company's real logo if provided, else an SVG wordmark."""
+    if logo:
+        return f'<span class="brand__logo brand__logo--img"><img src="{logo}" alt="{site_name}"></span>'
+    return (f'<span class="brand__logo" style="display:inline-flex;align-items:center;gap:.55rem">'
+            f'<svg viewBox="0 0 100 100" width="38" height="38" aria-hidden="true">'
+            f'<rect width="100" height="100" rx="22" fill="{navy}"/>'
+            f'<path d="M50 20 80 46v34H59V62H41v18H20V46Z" fill="{brand}"/></svg>'
+            f'<span style="font-family:var(--serif);font-weight:600;font-size:clamp(.92rem,.8rem+.35vw,1.12rem);'
+            f'color:var(--ink);letter-spacing:-.01em;white-space:nowrap">{site_name}</span></span>')
+
+
+def gen_welcome_sig(photo, names, sub):
+    """Welcome signature: include the broker's real photo if we have one; otherwise
+    show just the name/role (no broken placeholder image)."""
+    img = f'<img src="{photo}" alt="{names}">' if photo else ""
+    return (f'<div class="welcome__sig">{img}'
+            f'<div><p class="name">{names}</p><p class="role">{sub}</p></div></div>')
+
+
 def build_tokens(cfg):
     b = cfg.get("brand", {})
     team = cfg.get("team", [])
     solo = len(team) == 1
+    _logo = cfg.get("logo")
+    _navy = b.get("navy", "#180c44"); _brand = b.get("brand", "#2e7a3f")
+    _name = cfg.get("site_name", "Realty Co.")
+    _names = cfg.get("team_first_names", " & ".join(first_name(m.get("name")) for m in team))
+    _sig_sub = f'{cfg.get("legal_name", _name)} · {cfg.get("office_location", "")}'
+    _photo = cfg.get("welcome_photo") or (team[0].get("image") if team else None)
     t = {
         # Editorial copy — defaults are GENERIC; the build agent should override
         # these per realtor (their voice, their specialty). Team headings adapt to
@@ -203,6 +233,8 @@ def build_tokens(cfg):
         "PRIMARY_PHONE_TEL": cfg.get("primary_phone_tel", ""),
         "PRIMARY_EMAIL": cfg.get("primary_email", ""),
         "PHONE_PLACEHOLDER": phone_placeholder(cfg.get("primary_phone", "")),
+        "BRAND_MARK": gen_brand_mark(_logo, _navy, _brand, _name),
+        "WELCOME_SIG": gen_welcome_sig(_photo, _names, _sig_sub),
         "HERO_EYEBROW": cfg.get("hero", {}).get("eyebrow", ""),
         "HERO_H1": cfg.get("hero", {}).get("h1", ""),
         "HERO_SUB": cfg.get("hero", {}).get("sub", ""),

@@ -17,7 +17,7 @@
   <!-- ======= Login gate ======= -->
   <div class="gate" id="gate">
     <form class="gate__card" id="gate-form">
-      <span class="gate__logo" style="display:inline-flex;align-items:center;gap:.55rem"><svg viewBox="0 0 100 100" width="38" height="38" aria-hidden="true"><rect width="100" height="100" rx="22" fill="{{COLOR_NAVY}}"/><path d="M50 20 80 46v34H59V62H41v18H20V46Z" fill="{{COLOR_BRAND}}"/></svg><span style="font-family:var(--serif);font-weight:600;font-size:clamp(.92rem,.8rem+.35vw,1.12rem);color:var(--ink);letter-spacing:-.01em;white-space:nowrap">{{SITE_NAME}}</span></span>
+      {{BRAND_MARK}}
       <h1>Welcome to the <em>back office.</em></h1>
       <p>Manage your current listings and showcase your closed homes. Changes appear on the public site instantly.</p>
       <div class="gate__error" id="gate-error" role="alert"></div>
@@ -35,7 +35,7 @@
     <header class="admin-topbar">
       <div class="container--wide admin-topbar__inner">
         <a class="brand" href="index.html" aria-label="{{SITE_NAME}} — view site">
-          <span class="brand__logo" style="display:inline-flex;align-items:center;gap:.55rem"><svg viewBox="0 0 100 100" width="38" height="38" aria-hidden="true"><rect width="100" height="100" rx="22" fill="{{COLOR_NAVY}}"/><path d="M50 20 80 46v34H59V62H41v18H20V46Z" fill="{{COLOR_BRAND}}"/></svg><span style="font-family:var(--serif);font-weight:600;font-size:clamp(.92rem,.8rem+.35vw,1.12rem);color:var(--ink);letter-spacing:-.01em;white-space:nowrap">{{SITE_NAME}}</span></span>
+          {{BRAND_MARK}}
         </a>
         <span class="badge-office">Back office</span>
         <div class="admin-topbar__actions">

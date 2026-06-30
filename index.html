@@ -19,7 +19,7 @@
     <div class="container--wide">
       <nav class="nav" aria-label="Main">
         <a class="brand" href="index.html" aria-label="{{SITE_NAME}} — home">
-          <span class="brand__logo" style="display:inline-flex;align-items:center;gap:.55rem"><svg viewBox="0 0 100 100" width="38" height="38" aria-hidden="true"><rect width="100" height="100" rx="22" fill="{{COLOR_NAVY}}"/><path d="M50 20 80 46v34H59V62H41v18H20V46Z" fill="{{COLOR_BRAND}}"/></svg><span style="font-family:var(--serif);font-weight:600;font-size:clamp(.92rem,.8rem+.35vw,1.12rem);color:var(--ink);letter-spacing:-.01em;white-space:nowrap">{{SITE_NAME}}</span></span>
+          {{BRAND_MARK}}
         </a>
 
         <ul class="nav__links" id="nav-links">
@@ -94,13 +94,7 @@
             <h2 class="h-display">{{ABOUT_H2}}</h2>
             <p>{{ABOUT_P1}}</p>
             <p>{{ABOUT_P2}}</p>
-            <div class="welcome__sig">
-              <img src="assets/img/team.jpg" alt="The {{SITE_NAME}} team">
-              <div>
-                <p class="name">{{TEAM_FIRST_NAMES}}</p>
-                <p class="role">{{LEGAL_NAME}} · {{OFFICE_LOCATION}}</p>
-              </div>
-            </div>
+            {{WELCOME_SIG}}
           </div>
         </div>
       </div>
@@ -347,7 +341,7 @@
       <div class="footer-grid">
         <div class="footer-about">
           <a class="brand" href="index.html" aria-label="{{SITE_NAME}}">
-            <span class="brand__logo" style="display:inline-flex;align-items:center;gap:.55rem"><svg viewBox="0 0 100 100" width="38" height="38" aria-hidden="true"><rect width="100" height="100" rx="22" fill="{{COLOR_NAVY}}"/><path d="M50 20 80 46v34H59V62H41v18H20V46Z" fill="{{COLOR_BRAND}}"/></svg><span style="font-family:var(--serif);font-weight:600;font-size:clamp(.92rem,.8rem+.35vw,1.12rem);color:var(--ink);letter-spacing:-.01em;white-space:nowrap">{{SITE_NAME}}</span></span>
+            {{BRAND_MARK}}
           </a>
           <p>{{FOOTER_ABOUT}}</p>
         </div>
