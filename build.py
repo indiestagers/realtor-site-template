@@ -26,7 +26,8 @@ import sys
 
 # Files that contain tokens (everything else is copied verbatim).
 TOKEN_FILES = ["index.html", "listings.html", "admin.html",
-               "css/style.css", "js/data.js", "js/admin.js", "js/main.js"]
+               "css/style.css", "js/data.js", "js/admin.js", "js/main.js",
+               "js/agent-config.js", "js/agent.js"]
 
 SVG_PHONE = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '
              'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 '
@@ -233,6 +234,11 @@ def build_tokens(cfg):
         "PRIMARY_PHONE_TEL": cfg.get("primary_phone_tel", ""),
         "PRIMARY_EMAIL": cfg.get("primary_email", ""),
         "PHONE_PLACEHOLDER": phone_placeholder(cfg.get("primary_phone", "")),
+        # "Ramon" voice widget copy — the assistant itself (vapiPublicKey/
+        # vapiAssistantId) is fixed/shared in js/agent-config.js, not per-config;
+        # only the on-page tagline/bubble text is personalized per realtor.
+        "AGENT_TAGLINE": cfg.get("agent_tagline", f'Your {_name} concierge'),
+        "AGENT_BUBBLE_TEXT": cfg.get("agent_bubble_text", "Hi, I'm Ramon — talk to me!"),
         "BRAND_MARK": gen_brand_mark(_logo, _navy, _brand, _name),
         "WELCOME_SIG": gen_welcome_sig(_photo, _names, _sig_sub),
         "HERO_EYEBROW": cfg.get("hero", {}).get("eyebrow", ""),

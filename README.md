@@ -39,6 +39,7 @@ still builds. It prints any unfilled tokens at the end.
 | `listings[]` | the seed in `js/data.js` (status/address/price/beds/…) |
 | `areas[]`, `community[]`, `socials[]` | marquee, neighborhood tiles, social links |
 | `admin_passcode` | the back-office gate |
+| `agent_tagline`, `agent_bubble_text` | optional overrides for the "Ramon" voice widget's on-page copy (see below) |
 
 See `site.config.example.json` for a complete, working example.
 
@@ -49,6 +50,28 @@ See `site.config.example.json` for a complete, working example.
 | `index.html` | Hero, services, featured listings, sold showcase, team, community, contact |
 | `listings.html` | Full portfolio with For-sale / Pending / Sold filters + price sort |
 | `admin.html` | Passcode-gated back office to add/edit/feature listings (localStorage demo) |
+
+## "Ramon" — the voice AI concierge widget
+
+Every built site ships with a floating voice-agent widget (`js/agent.js` +
+`js/agent-config.js` + `css/agent.css`) powered by [Vapi](https://vapi.ai). It's
+**one shared assistant reused across every site** — same `vapiPublicKey` +
+`vapiAssistantId` on every build, hardcoded in `js/agent-config.js` (not part of
+`site.config.json`, since it never changes per realtor). Only the on-page copy
+adapts per site:
+
+- the header tagline ("Your **{site_name}** concierge") — override with `agent_tagline`
+- the greeting bubble text — override with `agent_bubble_text`
+- the intro line's booking mention (auto-adapts to the team via `team_first_names`)
+- the "line dropped, call us" fallback phone number (from `primary_phone`)
+- the panel footer brand name (from `site_name`)
+
+Ramon's own identity — avatar illustration, name, green/gold halo, panel accent
+colors — stays constant by design; the surrounding chrome (`--ink`, `--cream`,
+`--green-2`, etc.) still inherits each site's brand palette via the same CSS
+custom properties the rest of the design uses. To rotate the Vapi key/assistant
+or change the agent's name globally, edit `js/agent-config.js` directly — it's a
+one-time change that applies to every future build.
 
 ## Design system
 
