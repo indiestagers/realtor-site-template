@@ -38,6 +38,43 @@ function hrInitHeader() {
   }
 }
 
+/* ---------- Hero: "empty room becomes home" scroll wipe ---------- */
+function hrInitHeroStage() {
+  const stage = document.querySelector(".hero-stage");
+  if (!stage || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const hero = stage.querySelector(".hero--story");
+  const before = stage.querySelector(".hero__before");
+  const seam = stage.querySelector(".hero__seam");
+  if (!hero || !before || !seam) return;
+
+  const clamp = (value) => Math.max(0, Math.min(1, value));
+  let ticking = false;
+
+  const update = () => {
+    const rect = stage.getBoundingClientRect();
+    const distance = Math.max(1, stage.offsetHeight - hero.offsetHeight);
+    const progress = clamp(-rect.top / distance);
+    const complete = progress > 0.985;
+    before.style.clipPath = `inset(0 ${progress * 100}% 0 0)`;
+    before.style.visibility = complete ? "hidden" : "visible";
+    seam.style.left = `${progress * 100}%`;
+    seam.style.opacity = complete ? "0" : "0.95";
+    ticking = false;
+  };
+
+  const requestUpdate = () => {
+    if (!ticking) {
+      window.requestAnimationFrame(update);
+      ticking = true;
+    }
+  };
+
+  window.addEventListener("scroll", requestUpdate, { passive: true });
+  window.addEventListener("resize", requestUpdate);
+  update();
+}
+
 /* ---------- Scroll reveal ---------- */
 function hrInitReveal() {
   const items = document.querySelectorAll(".reveal, .reveal-stagger");
@@ -223,6 +260,7 @@ function hrToast(msg) {
 
 document.addEventListener("DOMContentLoaded", () => {
   hrInitHeader();
+  hrInitHeroStage();
   hrRenderHome();
   hrRenderListingsPage();
   hrInitContactForm();

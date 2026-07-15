@@ -40,6 +40,7 @@ still builds. It prints any unfilled tokens at the end.
 | `areas[]`, `community[]`, `socials[]` | marquee, neighborhood tiles, social links |
 | `admin_passcode` | the back-office gate |
 | `agent_tagline`, `agent_bubble_text` | optional overrides for the "Ramon" voice widget's on-page copy (see below) |
+| `hero.before_image`, `hero.after_image` | optional overrides for the "empty room becomes home" hero photos (see below) |
 
 See `site.config.example.json` for a complete, working example.
 
@@ -50,6 +51,26 @@ See `site.config.example.json` for a complete, working example.
 | `index.html` | Hero, services, featured listings, sold showcase, team, community, contact |
 | `listings.html` | Full portfolio with For-sale / Pending / Sold filters + price sort |
 | `admin.html` | Passcode-gated back office to add/edit/feature listings (localStorage demo) |
+
+## Hero: "an empty room becomes home"
+
+The homepage hero is a scroll-driven wipe between two stacked photos of the
+*same room* — one empty, one with people in it — with a glowing seam line that
+tracks scroll progress (`hrInitHeroStage()` in `js/main.js`). It's sticky-pinned
+(`.hero-stage` / `.hero--story`) so the wipe plays out over ~240px of extra
+scroll before the page continues normally.
+
+Defaults ship as local assets, `assets/img/hero/room-empty.png` /
+`room-lived-in.png` — the original photo pair this effect was built around.
+Override per realtor with `hero.before_image` / `hero.after_image` in
+`site.config.json` if a matched before/after pair is scrapeable (a mismatched
+pair — two different rooms — won't read as the same narrative, so leave the
+defaults if you don't have a real matched pair).
+
+Mobile (`<640px`) switches the photos to a letterboxed `object-fit: contain`
+block near the top instead of full-bleed, so the wipe stays legible above the
+folded text. `prefers-reduced-motion` skips the scroll listener entirely and
+shows the "after" photo immediately via a CSS fallback — no motion, no story.
 
 ## "Ramon" — the voice AI concierge widget
 
@@ -82,9 +103,9 @@ targets.
 
 ## Notes
 
-- Hero/section/community imagery uses Unsplash placeholders — swap in the
-  brokerage's own photography before launch (replace the URLs in the config and
-  the few hero `<img>` tags in `index.html`).
+- Section/community imagery uses Unsplash placeholders — swap in the brokerage's
+  own photography before launch (replace the URLs in the config). The hero's
+  before/after photos are local assets, not Unsplash — see above.
 - The contact form and admin panel are **front-end demos** (no backend). The
   admin persists to `localStorage`; wire the form to Formspree/Netlify Forms and
   swap the data layer for Supabase for production. The data shape is already

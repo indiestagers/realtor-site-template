@@ -244,6 +244,11 @@ def build_tokens(cfg):
         "HERO_EYEBROW": cfg.get("hero", {}).get("eyebrow", ""),
         "HERO_H1": cfg.get("hero", {}).get("h1", ""),
         "HERO_SUB": cfg.get("hero", {}).get("sub", ""),
+        # "Empty room becomes home" scroll wipe — two stacked photos + hrInitHeroStage()
+        # in main.js. Defaults ship as local assets (assets/img/hero/); swap in the
+        # realtor's own before/after photos via config when scrapeable.
+        "HERO_BEFORE_IMAGE": cfg.get("hero", {}).get("before_image", "assets/img/hero/room-empty.png"),
+        "HERO_AFTER_IMAGE": cfg.get("hero", {}).get("after_image", "assets/img/hero/room-lived-in.png"),
         "ABOUT_P1": cfg.get("about_p1", ""),
         "TEAM_FIRST_NAMES": cfg.get("team_first_names",
                                     " & ".join(first_name(m.get("name")) for m in cfg.get("team", []))),

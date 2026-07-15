@@ -270,6 +270,13 @@ ul, ol { list-style: none; }
 }
 
 /* ---------- Hero ---------- */
+/* Outer stage: taller than the viewport so the sticky .hero--story below can
+   pin in place while the extra scroll distance drives the before/after wipe. */
+.hero-stage {
+  position: relative;
+  min-height: calc(100svh + 240px);
+  background: var(--ink);
+}
 .hero {
   position: relative;
   min-height: 100svh;
@@ -278,14 +285,39 @@ ul, ol { list-style: none; }
   isolation: isolate;
   overflow: clip;
 }
+.hero--story {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+}
 .hero__bg {
   position: absolute; inset: 0; z-index: -2;
 }
 .hero__bg img {
+  position: absolute; inset: 0;
   width: 100%; height: 100%; object-fit: cover;
-  animation: heroZoom 14s var(--ease) forwards;
 }
+.hero__bg:not(.hero__story-media) img { animation: heroZoom 14s var(--ease) forwards; }
 @keyframes heroZoom { from { transform: scale(1.12); } to { transform: scale(1); } }
+
+/* "Empty room becomes home" scroll wipe: two stacked photos + a moving seam,
+   driven by hrInitHeroStage() in main.js. Degrades to the after-photo alone
+   under prefers-reduced-motion (see the reduced-motion block below). */
+.hero__story-media { background: var(--ink); }
+.hero__after { z-index: 0; }
+.hero__before {
+  z-index: 1;
+  will-change: clip-path;
+  clip-path: inset(0 0 0 0);
+}
+.hero__seam {
+  position: absolute; z-index: 2; top: 0; bottom: 0; left: 0;
+  width: 2px;
+  background: var(--green-2);
+  box-shadow: 0 0 26px 2px color-mix(in srgb, var(--green-2) 70%, transparent);
+  transform: translateX(-1px);
+  will-change: left, opacity;
+}
 .hero::after {
   content: ""; position: absolute; inset: 0; z-index: -1;
   /* Stronger mid/top darkening so hero text stays legible over bright photos
@@ -346,6 +378,23 @@ ul, ol { list-style: none; }
 @media (max-width: 640px) {
   .hero__stat + .hero__stat { border-left: none; padding-left: 0; }
   .hero__stat { padding-block: 0.9rem; border-bottom: 1px solid var(--line-on-ink); }
+}
+
+/* Small screens: shorten the scroll distance and let the before/after photos
+   sit inline (contain) near the top instead of filling the full-bleed frame,
+   so the wipe stays legible above the folded text. */
+@media (max-width: 640px) {
+  .hero-stage { min-height: calc(100svh + 180px); }
+  .hero--story { justify-content: flex-start; }
+  .hero__story-media img {
+    top: 78px;
+    bottom: auto;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: contain;
+    object-position: center top;
+  }
+  .hero__seam { top: 78px; bottom: auto; height: calc(100vw * 2 / 3); }
 }
 
 .hero__scroll {
@@ -907,6 +956,11 @@ ul, ol { list-style: none; }
   html { scroll-behavior: auto; }
   .reveal, .reveal-stagger > * { opacity: 1; transform: none; }
   .marquee__track { animation: none; }
+  /* Hero wipe: skip the scroll-driven story entirely — show the "after" photo
+     immediately (hrInitHeroStage() also bails out via matchMedia). */
+  .hero-stage { min-height: 100svh; }
+  .hero__before { clip-path: inset(0 100% 0 0) !important; }
+  .hero__seam { display: none; }
 }
 
 /* ---------- Toast ---------- */
