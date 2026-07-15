@@ -318,6 +318,33 @@ ul, ol { list-style: none; }
   transform: translateX(-1px);
   will-change: left, opacity;
 }
+/* Universal caption for the wipe itself — constant across every build (like
+   Ramon's identity), independent of the per-realtor {{HERO_H1}} below it. */
+.hero__story-caption {
+  position: absolute; z-index: 3;
+  top: clamp(6.4rem, 5rem + 5vh, 8.2rem);
+  left: 50%; transform: translateX(-50%);
+  margin: 0;
+  text-align: center; pointer-events: none;
+  font-family: var(--serif); font-style: italic; font-weight: 460;
+  font-size: clamp(0.95rem, 0.82rem + 0.5vw, 1.2rem);
+  line-height: 1.3;
+  color: var(--cream);
+  /* Frosted pill (not just a text-shadow) so it stays legible over any part
+     of the photo, bright ceiling included — same accessible-over-photo
+     pattern as the eyebrow text, just with an explicit backdrop here since
+     this caption can land on the brightest part of either image. */
+  background: rgba(15, 22, 17, 0.44);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(250, 246, 238, 0.14);
+  border-radius: var(--radius-pill);
+  padding: 0.55rem 1.3rem;
+  white-space: nowrap;
+}
+.hero__story-caption em { font-style: italic; color: var(--green-2); }
+@media (max-width: 640px) { .hero__story-caption { display: none; } }
+
 .hero::after {
   content: ""; position: absolute; inset: 0; z-index: -1;
   /* Stronger mid/top darkening so hero text stays legible over bright photos
