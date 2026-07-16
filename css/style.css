@@ -343,7 +343,12 @@ ul, ol { list-style: none; }
   white-space: nowrap;
 }
 .hero__story-caption em { font-style: italic; color: var(--green-2); }
-@media (max-width: 640px) { .hero__story-caption { display: none; } }
+@media (max-width: 640px) {
+  /* Not enough vertical room between the nav and the eyebrow/headline stack
+     on a phone to also fit this caption without overlapping — hide it here
+     and let the per-realtor {{HERO_H1}} carry the message on mobile. */
+  .hero__story-caption { display: none; }
+}
 
 .hero::after {
   content: ""; position: absolute; inset: 0; z-index: -1;
@@ -407,21 +412,16 @@ ul, ol { list-style: none; }
   .hero__stat { padding-block: 0.9rem; border-bottom: 1px solid var(--line-on-ink); }
 }
 
-/* Small screens: shorten the scroll distance and let the before/after photos
-   sit inline (contain) near the top instead of filling the full-bleed frame,
-   so the wipe stays legible above the folded text. */
+/* Small screens: same full-bleed cover photo as desktop (a letterboxed/
+   contain treatment left too much dead space and read as "cut off"), but
+   content still starts below the nav instead of bottom-anchoring — on a
+   mobile-length headline+sub+actions+stats stack, bottom-anchoring (the
+   desktop default) overflows UPWARD past the nav bar since the content is
+   taller than the viewport. Shorten the extra scroll distance a bit too,
+   since mobile viewports are shorter. */
 @media (max-width: 640px) {
-  .hero-stage { min-height: calc(100svh + 180px); }
+  .hero-stage { min-height: calc(100svh + 140px); }
   .hero--story { justify-content: flex-start; }
-  .hero__story-media img {
-    top: 78px;
-    bottom: auto;
-    height: auto;
-    aspect-ratio: 3 / 2;
-    object-fit: contain;
-    object-position: center top;
-  }
-  .hero__seam { top: 78px; bottom: auto; height: calc(100vw * 2 / 3); }
 }
 
 .hero__scroll {
