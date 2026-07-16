@@ -420,28 +420,29 @@ ul, ol { list-style: none; }
   .hero__stat { padding-block: 0.9rem; border-bottom: 1px solid var(--line-on-ink); }
 }
 
-/* Small screens: same full-bleed cover photo as desktop (a letterboxed/
-   contain treatment left too much dead space and read as "cut off"), but
-   content still starts below the nav instead of bottom-anchoring — on a
-   mobile-length headline+sub+actions+stats stack, bottom-anchoring (the
-   desktop default) overflows UPWARD past the nav bar since the content is
-   taller than the viewport. Shorten the extra scroll distance a bit too,
-   since mobile viewports are shorter. */
+/* Small screens: stop trying to make one photo do both jobs (full-bleed
+   backdrop AND overlaid text legibility AND keep an arbitrary wide photo's
+   subject in frame) — split into two plain stacked blocks instead: an
+   image band sized to the photo's own aspect ratio (nothing cropped out,
+   whatever the photo's composition), then the text in its own solid-ink
+   block below. Robust regardless of what gets swapped into
+   hero.before_image/after_image — no per-photo object-position tuning
+   needed, and no more fighting nav/eyebrow/caption overlap on a photo that
+   was never going to fit all of a wide group shot into a narrow full-height
+   crop anyway. Trades the pinned/sticky reveal for a quick reveal-on-
+   first-scroll (the wipe math still runs, it just completes almost
+   immediately since the band is no longer taller than the viewport). */
 @media (max-width: 640px) {
-  .hero-stage { min-height: calc(80svh + 100px); }
-  /* min-height:0 is required — the base .hero rule sets min-height:100svh,
-     which otherwise wins over this height:80svh (min-height always wins when
-     larger), silently keeping the section at full height despite this rule. */
-  .hero--story { justify-content: flex-start; height: 80svh; min-height: 0; }
-  /* The default photo pair is a wide 5-person group shot — object-fit:cover
-     at full mobile height crops down to a narrow center strip that lands on
-     the coffee table, cropping out every person. Shorter height (80svh, not
-     100) means less vertical stretch and so less horizontal crop, and a
-     rightward bias centers the crop on the two clearly-engaged people on
-     that side instead of the empty middle. Realtors with their own
-     before/after pair via hero.before_image/after_image should sanity-check
-     this object-position still frames their photo well. */
-  .hero__story-media img { object-position: 66% center; }
+  .hero-stage { min-height: auto; background: none; }
+  .hero { min-height: 0; display: block; overflow: visible; }
+  .hero--story { position: static; height: auto; min-height: 0; }
+  .hero__bg.hero__story-media {
+    position: relative; inset: auto; z-index: auto;
+    width: 100%; aspect-ratio: 4 / 3; overflow: hidden;
+  }
+  .hero__story-caption, .hero__scroll { display: none; }
+  .hero::after { display: none; }
+  .hero__inner { padding: 2.25rem 1.25rem 2.5rem; background: var(--ink); }
 }
 
 .hero__scroll {
