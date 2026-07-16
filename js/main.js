@@ -45,8 +45,30 @@ function hrInitHeroStage() {
 
   const hero = stage.querySelector(".hero--story");
   const before = stage.querySelector(".hero__before");
+  const after = stage.querySelector(".hero__after");
   const seam = stage.querySelector(".hero__seam");
-  if (!hero || !before || !seam) return;
+  if (!hero || !before || !after || !seam) return;
+
+  // Don't let scroll drive the wipe until both photos have actually loaded —
+  // scrolling past the reveal point before the "after" photo is in means you
+  // never see it arrive, and scrolling back up doesn't replay it either
+  // (see the ratchet below), so it's just permanently missed. Hold at the
+  // empty-room resting state (the plain CSS/inline default, untouched) until
+  // both images fire "load" (or are already cached/complete on init).
+  let ready = false;
+  const isLoaded = (img) => img.complete && img.naturalWidth > 0;
+  const markReady = () => { if (!ready) { ready = true; update(); } };
+  if (isLoaded(before) && isLoaded(after)) {
+    ready = true;
+  } else {
+    before.addEventListener("load", markReady, { once: true });
+    after.addEventListener("load", markReady, { once: true });
+  }
+
+  // One-way ratchet: once the wipe fully completes, stay on the "after"
+  // (people) photo for the rest of the page's life, even if the user
+  // scrolls back up past the hero — don't replay/reverse it.
+  let revealed = false;
 
   // On mobile the stage's extra "room to stick" comes from the sticky
   // section's own content height (headline length varies per realtor) plus
@@ -72,11 +94,21 @@ function hrInitHeroStage() {
   let ticking = false;
 
   const update = () => {
+    if (!ready) { ticking = false; return; } // hold at the empty-room resting state
+    if (revealed) {
+      // Ratchet is locked — stay on the "after" photo regardless of scroll.
+      before.style.clipPath = "inset(0 100% 0 0)";
+      before.style.visibility = "hidden";
+      seam.style.opacity = "0";
+      ticking = false;
+      return;
+    }
     const rect = stage.getBoundingClientRect();
     const distance = Math.max(1, stage.offsetHeight - hero.offsetHeight);
     const raw = clamp(-rect.top / distance);
     const progress = raw <= DEAD_ZONE ? 0 : clamp((raw - DEAD_ZONE) / (1 - DEAD_ZONE));
     const complete = progress > 0.985;
+    if (complete) revealed = true;
     before.style.clipPath = `inset(0 ${progress * 100}% 0 0)`;
     before.style.visibility = complete ? "hidden" : "visible";
     seam.style.left = `${progress * 100}%`;
