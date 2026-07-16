@@ -48,13 +48,34 @@ function hrInitHeroStage() {
   const seam = stage.querySelector(".hero__seam");
   if (!hero || !before || !seam) return;
 
+  // On mobile the stage's extra "room to stick" comes from the sticky
+  // section's own content height (headline length varies per realtor) plus
+  // a fixed buffer — can't express "child's natural height + N" in pure
+  // CSS, and a padding-bottom approach on the container does NOT reliably
+  // give position:sticky room to stick (tested: sticky silently no-ops,
+  // the section just scrolls at normal speed with no pin at all) where an
+  // explicit min-height does. So compute it here instead. Desktop already
+  // gets a fixed min-height from CSS (calc(100svh + 240px)) and doesn't
+  // need this — --hero-scroll-buffer is only set to a nonzero value inside
+  // the mobile media query.
+  const setStageHeight = () => {
+    const buffer = parseFloat(getComputedStyle(stage).getPropertyValue("--hero-scroll-buffer")) || 0;
+    if (buffer > 0) stage.style.minHeight = `${hero.offsetHeight + buffer}px`;
+  };
+  setStageHeight();
+  window.addEventListener("resize", setStageHeight);
+
   const clamp = (value) => Math.max(0, Math.min(1, value));
+  // Small dead-zone so the wipe doesn't start on the very first scroll pixel —
+  // the empty room holds for a beat, then people arrive as you keep scrolling.
+  const DEAD_ZONE = 0.12;
   let ticking = false;
 
   const update = () => {
     const rect = stage.getBoundingClientRect();
     const distance = Math.max(1, stage.offsetHeight - hero.offsetHeight);
-    const progress = clamp(-rect.top / distance);
+    const raw = clamp(-rect.top / distance);
+    const progress = raw <= DEAD_ZONE ? 0 : clamp((raw - DEAD_ZONE) / (1 - DEAD_ZONE));
     const complete = progress > 0.985;
     before.style.clipPath = `inset(0 ${progress * 100}% 0 0)`;
     before.style.visibility = complete ? "hidden" : "visible";

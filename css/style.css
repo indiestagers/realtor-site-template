@@ -429,13 +429,22 @@ ul, ol { list-style: none; }
    hero.before_image/after_image — no per-photo object-position tuning
    needed, and no more fighting nav/eyebrow/caption overlap on a photo that
    was never going to fit all of a wide group shot into a narrow full-height
-   crop anyway. Trades the pinned/sticky reveal for a quick reveal-on-
-   first-scroll (the wipe math still runs, it just completes almost
-   immediately since the band is no longer taller than the viewport). */
+   crop anyway.
+
+   Still keeps the pinned-while-scrolling wipe (image sticks in place, people
+   arrive as you scroll, then the page releases and continues down). The
+   sticky box's "room to roam" needs to be [content height] + [buffer] —
+   content height varies per realtor (headline/sub copy length), so it can't
+   be a fixed CSS number. A padding-bottom buffer on the outer stage does
+   NOT reliably give position:sticky room to stick here (tested: sticky
+   silently no-ops, the section scrolls at normal speed with zero pin) —
+   only an explicit min-height does, so --hero-scroll-buffer is read by
+   hrInitHeroStage() in main.js, which measures the sticky content's actual
+   height and sets .hero-stage's min-height directly. */
 @media (max-width: 640px) {
-  .hero-stage { min-height: auto; background: none; }
+  .hero-stage { --hero-scroll-buffer: 170px; min-height: 0; background: none; }
   .hero { min-height: 0; display: block; overflow: visible; }
-  .hero--story { position: static; height: auto; min-height: 0; }
+  .hero--story { position: sticky; top: 0; height: auto; min-height: 0; }
   .hero__bg.hero__story-media {
     position: relative; inset: auto; z-index: auto;
     width: 100%; aspect-ratio: 4 / 3; overflow: hidden;
