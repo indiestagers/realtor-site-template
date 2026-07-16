@@ -322,13 +322,21 @@ ul, ol { list-style: none; }
    Ramon's identity), independent of the per-realtor {{HERO_H1}} below it. */
 .hero__story-caption {
   position: absolute; z-index: 3;
-  top: clamp(6.4rem, 5rem + 5vh, 8.2rem);
+  /* Fixed, NOT vh-based. .hero{justify-content:flex-end} means the eyebrow
+     below actually SLIDES with viewport height (shorter window -> content
+     rides up toward the nav), so this can't assume a fixed gap either — at
+     a common 800px-tall window the eyebrow lands only ~53px below the nav.
+     Sized/positioned to fit inside that tightest realistic gap with margin
+     on both sides; below ~750px the eyebrow itself starts sliding under the
+     nav regardless of this caption (a pre-existing issue in the flex-end
+     hero layout, out of scope here). */
+  top: 5.4rem;
   left: 50%; transform: translateX(-50%);
   margin: 0;
   text-align: center; pointer-events: none;
   font-family: var(--serif); font-style: italic; font-weight: 460;
-  font-size: clamp(0.95rem, 0.82rem + 0.5vw, 1.2rem);
-  line-height: 1.3;
+  font-size: 0.8rem;
+  line-height: 1.15;
   color: var(--cream);
   /* Frosted pill (not just a text-shadow) so it stays legible over any part
      of the photo, bright ceiling included — same accessible-over-photo
@@ -339,7 +347,7 @@ ul, ol { list-style: none; }
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(250, 246, 238, 0.14);
   border-radius: var(--radius-pill);
-  padding: 0.55rem 1.3rem;
+  padding: 0.32rem 1rem;
   white-space: nowrap;
 }
 .hero__story-caption em { font-style: italic; color: var(--green-2); }
