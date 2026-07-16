@@ -428,8 +428,20 @@ ul, ol { list-style: none; }
    taller than the viewport. Shorten the extra scroll distance a bit too,
    since mobile viewports are shorter. */
 @media (max-width: 640px) {
-  .hero-stage { min-height: calc(100svh + 140px); }
-  .hero--story { justify-content: flex-start; }
+  .hero-stage { min-height: calc(80svh + 100px); }
+  /* min-height:0 is required — the base .hero rule sets min-height:100svh,
+     which otherwise wins over this height:80svh (min-height always wins when
+     larger), silently keeping the section at full height despite this rule. */
+  .hero--story { justify-content: flex-start; height: 80svh; min-height: 0; }
+  /* The default photo pair is a wide 5-person group shot — object-fit:cover
+     at full mobile height crops down to a narrow center strip that lands on
+     the coffee table, cropping out every person. Shorter height (80svh, not
+     100) means less vertical stretch and so less horizontal crop, and a
+     rightward bias centers the crop on the two clearly-engaged people on
+     that side instead of the empty middle. Realtors with their own
+     before/after pair via hero.before_image/after_image should sanity-check
+     this object-position still frames their photo well. */
+  .hero__story-media img { object-position: 66% center; }
 }
 
 .hero__scroll {
